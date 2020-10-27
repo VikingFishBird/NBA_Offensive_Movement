@@ -1,4 +1,4 @@
-# NBA_Offensive_Movement
+# How important is offensive movement in the NBA?
  Determining the releationship between offensive movement and offensive production in the NBA.
 
 I was reading an article about proving whether or not Andrew Wiggins [*Does Andrew Wiggins Have an Effort Problem*](https://towardsdatascience.com/does-andrew-wiggins-have-an-effort-problem-a6a13c0337bb)
