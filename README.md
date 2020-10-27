@@ -10,3 +10,38 @@ Judging ball movement solely using offensive distance traveled does punish teams
 *Create a graph to represent the discrepancy between avg speed and dist per game vs Pace*
 
 [NBA Stats API](https://github.com/swar/nba_api/tree/master/docs/nba_api)
+
+```
+                         TEAM_NAME  Pace_Rank  Deviation_Rank  Avg_Rank
+TEAM_ID                                                                
+1610612745         Houston Rockets          2               1       1.5
+1610612749         Milwaukee Bucks          1               3       2.0
+1610612740    New Orleans Pelicans          3               6       4.5
+1610612764      Washington Wizards          7               5       6.0
+1610612747      Los Angeles Lakers         11               2       6.5
+1610612761         Toronto Raptors         12               4       8.0
+1610612746             LA Clippers          9               7       8.0
+1610612763       Memphis Grizzlies          6              12       9.0
+1610612750  Minnesota Timberwolves          4              16      10.0
+1610612751           Brooklyn Nets          8              15      11.5
+1610612741           Chicago Bulls         16               8      12.0
+1610612744   Golden State Warriors         14              11      12.5
+1610612737           Atlanta Hawks          5              20      12.5
+1610612738          Boston Celtics         17               9      13.0
+1610612756            Phoenix Suns         10              17      13.5
+1610612757  Portland Trail Blazers         13              18      15.5
+1610612754          Indiana Pacers         20              13      16.5
+1610612752         New York Knicks         24              10      17.0
+1610612760   Oklahoma City Thunder         22              14      18.0
+1610612759       San Antonio Spurs         15              21      18.0
+1610612758        Sacramento Kings         21              22      21.5
+1610612753           Orlando Magic         25              19      22.0
+1610612755      Philadelphia 76ers         19              26      22.5
+1610612742        Dallas Mavericks         18              28      23.0
+1610612762               Utah Jazz         26              25      25.5
+1610612766       Charlotte Hornets         30              23      26.5
+1610612743          Denver Nuggets         29              24      26.5
+1610612739     Cleveland Cavaliers         23              30      26.5
+1610612765         Detroit Pistons         28              27      27.5
+1610612748              Miami Heat         27              29      28.0
+```
