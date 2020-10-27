@@ -45,3 +45,4 @@ TEAM_ID
 1610612765         Detroit Pistons         28              27      27.5
 1610612748              Miami Heat         27              29      28.0
 ```
+![Figure 3](/figures/19-20_f3_Distance_vs_Speed.png)
