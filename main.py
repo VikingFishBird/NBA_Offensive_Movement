@@ -69,13 +69,14 @@ advanced_stats = (
 merged_team_stats = spectrum_tracking_stats.merge(advanced_stats, left_on='TEAM_ID', right_on='TEAM_ID')
 merged_team_stats.set_index('TEAM_ID', inplace=True)
 
-# Label axis
-merged_team_stats.plot(x='DIST_MILES_OFF', y='E_OFF_RATING', kind='scatter')
-plt.title('Isolation vs Movement Offenses ({})'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
+# region E_OFF_RATING vs DIST_MILES_OFF
+# Label axis: E_OFF_RATING vs DIST_MILES_OFF
+dist_vs_orat = merged_team_stats.plot(x='DIST_MILES_OFF', y='E_OFF_RATING', kind='scatter')
+plt.title('Offensive Rating vs Distance Traveled ({})'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
 plt.xlabel('Distance Traveled on Offense p/g (mi)', fontname='DejaVu Sans', fontsize=14)
 plt.ylabel('Offensive Rating', fontname='DejaVu Sans', fontsize=14)
 
-# Plot & color data
+# Plot & color: E_OFF_RATING vs DIST_MILES_OFF
 for team_id in merged_team_stats.index:
     plt.scatter(merged_team_stats.get('DIST_MILES_OFF').loc[team_id],
                 merged_team_stats.get('E_OFF_RATING').loc[team_id],
@@ -84,6 +85,53 @@ for team_id in merged_team_stats.index:
                 merged_team_stats.get('E_OFF_RATING').loc[team_id] + 0.1,
                 merged_team_stats.get('TEAM_ABBREVIATION').loc[team_id],
                 fontname='DejaVu Sans', fontsize=9)
+# endregion
+
+# region E_OFF_RATING vs AVG_SPEED_OFF
+# Label axis: E_OFF_RATING vs AVG_SPEED_OFF
+merged_team_stats.plot(x='AVG_SPEED_OFF', y='E_OFF_RATING', kind='scatter')
+plt.title('Offensive Rating vs Average Speed ({})'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
+plt.xlabel('Average player speed on Offense (mi/h)', fontname='DejaVu Sans', fontsize=14)
+plt.ylabel('Offensive Rating', fontname='DejaVu Sans', fontsize=14)
+
+# Plot & color: E_OFF_RATING vs AVG_SPEED_OFF
+for team_id in merged_team_stats.index:
+    plt.scatter(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id],
+                merged_team_stats.get('E_OFF_RATING').loc[team_id],
+                color=nba_colors_normalized[merged_team_stats.get('TEAM_NAME').loc[team_id]])
+    plt.text(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id] + 0.005,
+                merged_team_stats.get('E_OFF_RATING').loc[team_id] + 0.1,
+                merged_team_stats.get('TEAM_ABBREVIATION').loc[team_id],
+                fontname='DejaVu Sans', fontsize=9)
+# endregion
+
+# region DIST_MILES_OFF vs AVG_SPEED_OFF
+# Label axis: DIST_MILES_OFF vs AVG_SPEED_OFF
+merged_team_stats.plot(x='AVG_SPEED_OFF', y='DIST_MILES_OFF', kind='scatter')
+plt.title('Distance Traveled vs Player Speed ({})'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
+plt.xlabel('Average player speed on Offense (mi/h)', fontname='DejaVu Sans', fontsize=14)
+plt.ylabel('Distance Traveled on Offense p/g (mi)', fontname='DejaVu Sans', fontsize=14)
+
+dist_vs_spd_fit_line = np.poly1d(np.polyfit(merged_team_stats.get('AVG_SPEED_OFF'), merged_team_stats.get('DIST_MILES_OFF'), 1))
+line_values = np.linspace(merged_team_stats.get('AVG_SPEED_OFF').min(), merged_team_stats.get('AVG_SPEED_OFF').max(), 100)
+plt.plot(line_values, dist_vs_spd_fit_line(line_values), color='grey')
+
+# Plot & color: DIST_MILES_OFF vs AVG_SPEED_OFF
+for team_id in merged_team_stats.index:
+    plt.scatter(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id],
+                merged_team_stats.get('DIST_MILES_OFF').loc[team_id],
+                color=nba_colors_normalized[merged_team_stats.get('TEAM_NAME').loc[team_id]])
+    plt.text(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id] + 0.01,
+                merged_team_stats.get('DIST_MILES_OFF').loc[team_id] + 0.1,
+                merged_team_stats.get('TEAM_ABBREVIATION').loc[team_id],
+                fontname='DejaVu Sans', fontsize=9)
+# endregion
+
+# region Pace vs Deviation from Best Fit
+merged_team_stats['Deviation_From_Best_Fit'] = merged_team_stats.get('AVG_SPEED_OFF').apply(dist_vs_spd_fit_line) - merged_team_stats.get('DIST_MILES_OFF')
+
+merged_team_stats.sort_values(by='Deviation_From_Best_Fit').plot(x='TEAM_ABBREVIATION', y='Deviation_From_Best_Fit', kind='bar')
+merged_team_stats.sort_values(by='E_PACE').plot(x='TEAM_ABBREVIATION', y='E_PACE', kind='bar')
 
 plt.show()
 
