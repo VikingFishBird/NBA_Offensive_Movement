@@ -11,6 +11,7 @@ Judging ball movement solely using offensive distance traveled does punish teams
 
 [NBA Stats API](https://github.com/swar/nba_api/tree/master/docs/nba_api)
 
+```
                          TEAM_NAME  Pace_Rank  Deviation_Rank  Avg_Rank
 TEAM_ID                                                                
 1610612745         Houston Rockets          2               1       1.5
@@ -43,3 +44,4 @@ TEAM_ID
 1610612739     Cleveland Cavaliers         23              30      26.5
 1610612765         Detroit Pistons         28              27      27.5
 1610612748              Miami Heat         27              29      28.0
+```
