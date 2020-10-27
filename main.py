@@ -121,8 +121,8 @@ for team_id in merged_team_stats.index:
     plt.scatter(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id],
                 merged_team_stats.get('DIST_MILES_OFF').loc[team_id],
                 color=nba_colors_normalized[merged_team_stats.get('TEAM_NAME').loc[team_id]])
-    plt.text(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id] + 0.01,
-                merged_team_stats.get('DIST_MILES_OFF').loc[team_id] + 0.1,
+    plt.text(merged_team_stats.get('AVG_SPEED_OFF').loc[team_id] + 0.005,
+                merged_team_stats.get('DIST_MILES_OFF').loc[team_id] + 0.01,
                 merged_team_stats.get('TEAM_ABBREVIATION').loc[team_id],
                 fontname='DejaVu Sans', fontsize=9)
 # endregion
@@ -130,10 +130,42 @@ for team_id in merged_team_stats.index:
 # region Pace vs Deviation from Best Fit
 merged_team_stats['Deviation_From_Best_Fit'] = merged_team_stats.get('AVG_SPEED_OFF').apply(dist_vs_spd_fit_line) - merged_team_stats.get('DIST_MILES_OFF')
 
-merged_team_stats.sort_values(by='Deviation_From_Best_Fit').plot(x='TEAM_ABBREVIATION', y='Deviation_From_Best_Fit', kind='bar')
-merged_team_stats.sort_values(by='E_PACE').plot(x='TEAM_ABBREVIATION', y='E_PACE', kind='bar')
+sorted_by_deviation = merged_team_stats.sort_values(by='Deviation_From_Best_Fit')
+deviation_colors = []
+for i in range(len(sorted_by_deviation.index)):
+    deviation_colors.append(nba_colors_normalized[sorted_by_deviation.get('TEAM_NAME').iloc[i]])
 
+sorted_by_deviation.plot(x='TEAM_ABBREVIATION', y='Deviation_From_Best_Fit', kind='bar', color=deviation_colors)
+plt.title('Each Team\'s Deviation from the regression line.'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
+plt.xlabel('Team', fontname='DejaVu Sans', fontsize=14)
+plt.ylabel('Deviation from the regression line', fontname='DejaVu Sans', fontsize=14)
+
+
+sorted_by_pace = merged_team_stats.sort_values(by='E_PACE')
+pace_colors = []
+for i in range(len(sorted_by_pace.index)):
+    pace_colors.append(nba_colors_normalized[sorted_by_pace.get('TEAM_NAME').iloc[i]])
+
+sorted_by_pace.plot(x='TEAM_ABBREVIATION', y='E_PACE', kind='bar', color=pace_colors)
+plt.title('Each Team\'s Pace ({})'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
+plt.xlabel('Team', fontname='DejaVu Sans', fontsize=14)
+plt.ylabel('Pace', fontname='DejaVu Sans', fontsize=14)
+plt.ylim(sorted_by_pace.get('E_PACE').min() - 1, sorted_by_pace.get('E_PACE').max() + 1)
+
+# Further Comparisons w/ Pace and the deviation
+pace_vs_deviation_df = merged_team_stats.get(['TEAM_NAME', 'E_PACE', 'Deviation_From_Best_Fit']).sort_values(by='E_PACE', ascending=False)
+pace_vs_deviation_df['Pace_Rank'] = np.arange(1, 31)
+pace_vs_deviation_df = pace_vs_deviation_df.sort_values(by='Deviation_From_Best_Fit', ascending=False)
+pace_vs_deviation_df['Deviation_Rank'] = np.arange(1, 31)
+pace_vs_deviation_df['Avg_Rank'] = (pace_vs_deviation_df['Deviation_Rank'] + pace_vs_deviation_df['Pace_Rank'])/2
+pace_vs_deviation_df = pace_vs_deviation_df.sort_values(by='Avg_Rank', ascending=True)
+
+print(pace_vs_deviation_df.get(['TEAM_NAME', 'Pace_Rank', 'Deviation_Rank', 'Avg_Rank']))
+# endregion
+
+plt.figure(3)
 plt.show()
+
 
 # https://github.com/swar/nba_api/blob/master/docs/nba_api/stats/library/parameters.md#Season
 # https://github.com/swar/nba_api/blob/master/docs/nba_api/stats/endpoints/leaguedashptstats.md
