@@ -11,6 +11,8 @@ Judging ball movement solely using offensive distance traveled does punish teams
 
 [NBA Stats API](https://github.com/swar/nba_api/tree/master/docs/nba_api)
 
+![Figure 3](/figures/19-20_f3_Distance_vs_Speed.png)
+
 ```
                          TEAM_NAME  Pace_Rank  Deviation_Rank  Avg_Rank
 TEAM_ID                                                                
@@ -45,4 +47,6 @@ TEAM_ID
 1610612765         Detroit Pistons         28              27      27.5
 1610612748              Miami Heat         27              29      28.0
 ```
-![Figure 3](/figures/19-20_f3_Distance_vs_Speed.png)
+
+![Figure 4](/figures/19-20_f4_Deviation_from_line.png)
+![Figure 5](/figures/19-20_f5_Pace.png)
