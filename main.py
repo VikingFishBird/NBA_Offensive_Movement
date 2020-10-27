@@ -1,4 +1,3 @@
-import nba_api.stats.static.players as nba_players
 from nba_api.stats.endpoints import leaguedashptstats as team_tracking
 from nba_api.stats.endpoints import teamestimatedmetrics as team_advanced_stats
 import numpy as np
@@ -8,8 +7,10 @@ import matplotlib.pyplot as plt
 
 YEAR = '2019-20'
 
+# Configure plot settings
+print(mpl.get_cachedir())
 mpl.rcParams['figure.figsize'] = (8, 5)
-plt.style.use('fivethirtyeight')
+plt.style.use('ggplot')  # 7, 14
 nba_colors_rgb = {
     'Atlanta Hawks': (225, 68, 52),             # ATL
     'Boston Celtics': (0, 122, 51),             # BOS
@@ -48,13 +49,15 @@ nba_colors_normalized = {}
 for key in nba_colors_rgb:
     nba_colors_normalized[key] = (nba_colors_rgb[key][0]/255, nba_colors_rgb[key][1]/255, nba_colors_rgb[key][2]/255)
 
+# Create dataframe with distance traveled stats
 spectrum_tracking_stats = (
     team_tracking
         .LeagueDashPtStats(season=YEAR, per_mode_simple='PerGame')
         .get_data_frames()[0]
         .get(['TEAM_ID', 'TEAM_NAME', 'TEAM_ABBREVIATION', 'DIST_MILES_OFF', 'AVG_SPEED_OFF'])
 )
-print(spectrum_tracking_stats.columns)
+
+# Create dataframe with distance advanced team stats
 advanced_stats = (
     team_advanced_stats
         .TeamEstimatedMetrics(season=YEAR)
@@ -62,19 +65,25 @@ advanced_stats = (
         .get(['TEAM_ID', 'E_OFF_RATING', 'E_DEF_RATING', 'E_NET_RATING', 'E_PACE'])
 )
 
-print(spectrum_tracking_stats)
-
+# Merge tables
 merged_team_stats = spectrum_tracking_stats.merge(advanced_stats, left_on='TEAM_ID', right_on='TEAM_ID')
 merged_team_stats.set_index('TEAM_ID', inplace=True)
 
-ax = merged_team_stats.plot(x='DIST_MILES_OFF', y='E_OFF_RATING', kind='scatter')
+# Label axis
+merged_team_stats.plot(x='DIST_MILES_OFF', y='E_OFF_RATING', kind='scatter')
+plt.title('Isolation vs Movement Offenses ({})'.format(YEAR), fontname='DejaVu Sans', fontsize=18)
+plt.xlabel('Distance Traveled on Offense p/g (mi)', fontname='DejaVu Sans', fontsize=14)
+plt.ylabel('Offensive Rating', fontname='DejaVu Sans', fontsize=14)
+
+# Plot & color data
 for team_id in merged_team_stats.index:
     plt.scatter(merged_team_stats.get('DIST_MILES_OFF').loc[team_id],
                 merged_team_stats.get('E_OFF_RATING').loc[team_id],
                 color=nba_colors_normalized[merged_team_stats.get('TEAM_NAME').loc[team_id]])
-    plt.text(merged_team_stats.get('DIST_MILES_OFF').loc[team_id],
-                merged_team_stats.get('E_OFF_RATING').loc[team_id],
-                merged_team_stats.get('TEAM_ABBREVIATION').loc[team_id])
+    plt.text(merged_team_stats.get('DIST_MILES_OFF').loc[team_id] + 0.01,
+                merged_team_stats.get('E_OFF_RATING').loc[team_id] + 0.1,
+                merged_team_stats.get('TEAM_ABBREVIATION').loc[team_id],
+                fontname='DejaVu Sans', fontsize=9)
 
 plt.show()
 
