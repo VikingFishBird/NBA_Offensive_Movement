@@ -5,12 +5,15 @@ I was reading an article about proving whether or not Andrew Wiggins is lazy, wh
 
 [*Does Andrew Wiggins Have an Effort Problem*](https://towardsdatascience.com/does-andrew-wiggins-have-an-effort-problem-a6a13c0337bb)
 
-Judging ball movement solely using offensive distance traveled does punish teams that to run the fastbreak or quick offense as less time on offense results in less distance traveled. Using average speed fixes this issue... while creating new problems. It conflates fastbreak-heavy teams (this years' Lakers) and ball movement-heavy teams. While the Lakers run a static, pick and roll / isolation offense in the halfcourt, they had one of the [best fastbreak offenses in the league](https://stats.nba.com/teams/transition/?SeasonType=Regular%20Season&sort=PPP&dir=1).
+Judging ball movement solely using offensive distance traveled does punish teams that to run the fastbreak or quick offense as less time on offense results in less distance traveled. Using average speed fixes this issue... while creating new problems. It conflates fastbreak-heavy teams (this years' Lakers) and ball movement-heavy teams. While the Lakers run a static, pick and roll / isolation offense in the halfcourt, they had one of the [best fastbreak offenses in the league](https://stats.nba.com/teams/transition/?SeasonType=Regular%20Season&sort=PPP&dir=1). Considering both distance traveled and average player speed helps us determine which teams fostered more offensive movement.
 
 ![Figure 1](/figures/19-20_f1_ORAT_vs_Distance.png)
 ![Figure 2](/figures/19-20_f2_ORAT_vs_Speed.png)
 
-Below I compared each team's pace (determined by the amount of poessessions a team has in a game) and the deviation from the linear regression line of the graph below, which reveals the differences when using average speed and traveled distance to represent movement.
+Below I compared each team's pace (determined by the amount of poessessions a team has in a game) and the deviation from the linear regression line of the graph below, which reveals the differences when using average speed and traveled distance to represent movement. While each team's pace and deviation are correlated, they aren't identical. The deviation appears to emphasize fast break scoring (due to the involvement of player speed) so that teams like the Lakers, which run a slow-paced\* halfcourt offense, but love to run in transition are ranked highly, while the Hawks's fast-paced\* halfcourt offense is obscured.
+
+*\*Note: Slow-paced and fast-paced refer to how quickly offensive plays develop, not the speed of the players in the offense.*
+
 ![Figure 3](/figures/19-20_f3_Distance_vs_Speed.png)
 
 ```
@@ -47,6 +50,8 @@ TEAM_ID
 1610612765         Detroit Pistons         28              27      27.5
 1610612748              Miami Heat         27              29      28.0
 ```
+
+The discrepancy in Pace and Deviation
 
 ![Figure 4](/figures/19-20_f4_Deviation_from_line.png)
 ![Figure 5](/figures/19-20_f5_Pace.png)
