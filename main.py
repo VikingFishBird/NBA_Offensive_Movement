@@ -5,10 +5,15 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
+# This can be adjusted.
+# Works for every season including and after 2013-14
 YEAR = '2019-20'
 
+def format_player_name(name):
+    new_name = name.split('\\')[0].replace('[', '').replace(']', '')
+    return new_name
+
 # Configure plot settings
-print(mpl.get_cachedir())
 mpl.rcParams['figure.figsize'] = (8, 5)
 plt.style.use('ggplot')  # 7, 14
 nba_colors_rgb = {
@@ -16,6 +21,7 @@ nba_colors_rgb = {
     'Boston Celtics': (0, 122, 51),             # BOS
     'Brooklyn Nets': (0, 0, 0),                 # BRO
     'Charlotte Hornets': (29, 17, 96),          # CHA
+    'Charlotte Bobcats': (29, 17, 96),          # CHA
     'Chicago Bulls': (206, 17, 65),             # CHI
     'Cleveland Cavaliers': (134, 0, 56),        # CLE
     'Dallas Mavericks': (0, 83, 188),           # DAL
@@ -25,6 +31,7 @@ nba_colors_rgb = {
     'Houston Rockets': (206, 17, 65),           # HOU
     'Indiana Pacers': (0, 45, 98),              # IND
     'LA Clippers': (200, 16, 46),               # LAC
+    'Los Angeles Clippers': (200, 16, 46),      # LAC
     'Los Angeles Lakers': (85, 37, 130),        # LAL
     'Memphis Grizzlies': (93, 118, 169),        # MEM
     'Miami Heat': (152, 0, 46),                 # MIA
@@ -163,10 +170,13 @@ pace_vs_deviation_df = pace_vs_deviation_df.sort_values(by='Avg_Rank', ascending
 print(pace_vs_deviation_df.get(['TEAM_NAME', 'Pace_Rank', 'Deviation_Rank', 'Avg_Rank']))
 # endregion
 
+# region BREF advanced player stats
+if YEAR == '2019-20':
+    bref_advanced_player_stats = pd.read_csv('data/nba_advanced_player_stats_bref.csv')
+    bref_advanced_player_stats['Player'] = bref_advanced_player_stats.get('Player').apply(format_player_name)
+    bref_advanced_player_stats.set_index('Rk', inplace=True)
+    print(bref_advanced_player_stats)
+# endregion
+
 plt.figure(3)
 plt.show()
-
-
-# https://github.com/swar/nba_api/blob/master/docs/nba_api/stats/library/parameters.md#Season
-# https://github.com/swar/nba_api/blob/master/docs/nba_api/stats/endpoints/leaguedashptstats.md
-# https://github.com/swar/nba_api/blob/master/nba_api/stats/endpoints/leaguedashptstats.py
