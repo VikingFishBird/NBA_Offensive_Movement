@@ -10,9 +10,48 @@ Judging ball movement solely using offensive distance traveled does punish teams
 ![Figure 1](/figures/19-20_f1_ORAT_vs_Distance.png)
 ![Figure 2](/figures/19-20_f2_ORAT_vs_Speed.png)
 
-Below I compared each team's pace (determined by the amount of poessessions a team has in a game) and the deviation from the linear regression line of the graph below, which reveals the differences when using average speed and traveled distance to represent movement. While each team's pace and deviation are correlated, they aren't identical. The deviation appears to emphasize fast break scoring (due to the involvement of player speed) so that teams like the Lakers, which run a slow-paced\* halfcourt offense, but love to run in transition are ranked highly, while the Hawks's fast-paced\* halfcourt offense is obscured.
+The data didn't indicate whether offenses that prioritized spacing or movement were better, but did present the tools required to execute each offensive style. Teams that had success with an spacing-oriented offense each had great individual scoring talent that could bear the offensive load. Houston has Harden (ranked 2nd in offensive box plus-minus). Lakers have LeBron (6th) and the ideal pick 'n roll partner in Anthony Davis (10th). Portland has Damian Lillard (1st). On the other hand, teams such as Utah and (especially) San Antonio have been able replicate the same offensive production with offenses that favor movement. Neither Utah or San Antonio have players ranked within the top thirty. Teams have won championships employing both styles such as San Antonio in 2014 [without a single player in the top 20 by OBPM](https://www.basketball-reference.com/leagues/NBA_2014_advanced.html). The pre-Kevin Durant Warriors also prioritized ball movement, although they featured several offensive stars... and the only unanimous MVP in NBA history. After adding KD, one of the best isolation scorers in NBA history, was added to the roster, the Warriors offensive style became more balanced. On the other hand, ~~the LeBron James Heat, LeBron James Cavaliers, and the LeBron James Lakers~~ whereever LeBron goes, his team finds success with the ball in his hands in isolation or pick and roll. Teams can succeed with either playstyle, however certain talent is required to employ each strategy. Teams that prioritize spacing need efficient isolation scorers that can handle the ball/find the open man, while teams with movement-based offenses rely on (often role) players that can create shots without the ball in their hands.
 
-*\*Note: Slow-paced and fast-paced refer to how quickly offensive plays develop, not the speed of the players in the offense.*
+```
+                   Player Pos  Age   Tm    TS%   3PAr    FTr  USG%  OBPM▼
+Rk                                                                       
+1          Damian Lillard  PG   29  POR  0.627  0.500  0.384  30.3    8.3
+2            James Harden  SG   30  HOU  0.626  0.557  0.528  36.3    8.1
+3   Giannis Antetokounmpo  PF   25  MIL  0.613  0.237  0.508  37.5    7.4
+4             Luka Dončić  PG   20  DAL  0.585  0.431  0.448  36.8    7.4
+5      Karl-Anthony Towns   C   24  MIN  0.642  0.445  0.363  28.8    7.0
+6            LeBron James  PG   35  LAL  0.577  0.326  0.292  31.5    6.6
+7           Kawhi Leonard  SF   28  LAC  0.589  0.287  0.355  33.0    6.5
+8              Trae Young  PG   21  ATL  0.595  0.455  0.448  34.9    6.2
+9            Nikola Jokić   C   24  DEN  0.605  0.238  0.281  26.6    5.5
+10          Anthony Davis  PF   26  LAL  0.610  0.199  0.479  29.3    5.4
+11           Bradley Beal  SG   26  WAS  0.579  0.369  0.351  34.4    5.3
+12           Kemba Walker  PG   29  BOS  0.575  0.532  0.272  27.2    4.9
+13       Danilo Gallinari  PF   31  OKC  0.612  0.537  0.365  24.6    4.1
+14           Jimmy Butler  SF   30  MIA  0.585  0.157  0.693  25.1    4.0
+15           Derrick Rose  PG   31  DET  0.555  0.195  0.185  31.6    3.9
+16            Paul George  SF   29  LAC  0.589  0.487  0.277  29.6    3.8
+17       D'Angelo Russell  PG   23  TOT  0.556  0.509  0.235  31.5    3.8
+18           John Collins  PF   22  ATL  0.659  0.243  0.248  22.7    3.7
+19            Joel Embiid   C   25  PHI  0.590  0.215  0.543  32.9    3.7
+20         Nikola Vučević   C   29  ORL  0.549  0.280  0.162  25.8    3.7
+21           Jayson Tatum  PF   21  BOS  0.567  0.383  0.255  28.6    3.5
+22         Christian Wood  PF   24  DET  0.659  0.276  0.476  23.0    3.5
+23           Devin Booker  SG   23  PHO  0.618  0.310  0.397  30.0    3.4
+24        Khris Middleton  SF   28  MIL  0.619  0.374  0.240  26.4    3.4
+25            Zach LaVine  SG   24  CHI  0.568  0.404  0.279  31.7    3.2
+26             Chris Paul  PG   34  OKC  0.610  0.343  0.315  23.3    3.0
+27          Dāvis Bertāns  PF   27  WAS  0.628  0.774  0.200  19.0    2.7
+28      Spencer Dinwiddie  SG   26  BRK  0.541  0.392  0.437  29.2    2.7
+29         Gordon Hayward  SF   29  BOS  0.595  0.317  0.207  21.1    2.6
+30             Kevin Love  PF   31  CLE  0.599  0.536  0.301  23.1    2.6
+```
+[Exported CSV from basketball-reference.](https://www.basketball-reference.com/leagues/NBA_2020_advanced.html)
+
+Below is my examination of differences between average speed and traveled distance and how they each might inaccurately represent offensive movement:
+I compared each team's pace (determined by the amount of poessessions a team has in a game) and the deviation from the linear regression line of the graph below, which reveals the differences when using average speed and traveled distance to represent movement. While each team's pace and deviation are correlated, they aren't identical. The deviation appears to emphasize fast break scoring (due to the involvement of player speed) so that teams like the Lakers, which run a slow-paced\* halfcourt offense, but love to run in transition are ranked highly, while the Hawks's fast-paced\* halfcourt offense is obscured.
+
+*\*Note: Slow-paced and fast-paced refer to how quickly each team's plays develop, not the speed of the players in the offense.*
 
 ![Figure 3](/figures/19-20_f3_Distance_vs_Speed.png)
 
@@ -51,11 +90,8 @@ TEAM_ID
 1610612748              Miami Heat         27              29      28.0
 ```
 
-The discrepancy in Pace and Deviation
-
 ![Figure 4](/figures/19-20_f4_Deviation_from_line.png)
 ![Figure 5](/figures/19-20_f5_Pace.png)
-
 
 
 
