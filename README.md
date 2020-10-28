@@ -1,4 +1,4 @@
-# How important is offensive movement in the NBA?
+# How does offensive movement influence the production of NBA offenses?
  Determining the relationship between offensive movement and offensive production in the NBA.
 
 I was reading an article about proving whether or not Andrew Wiggins is lazy, which argued that he only tried his hardest against his former team, the Cleveland Cavaliers. With the low sample size of eight games against the Cavs and a debatable method of quantifying laziness--Judging effort on scoring efficiency seems somewhat flawed--so I wondered how else you could use data to argue this: Distance traveled. The NBA has tracked it since The 13-14 season, a year before Wiggins entered the league. However, I realized that distance traveled can be skewed by the playstyle of a particular team. Teams such as the Rockets often prioritize spacing over movement. They spread across the court to open up driving lanes or isolate defenders for their stars (particularly James Harden) to attack.
