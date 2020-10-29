@@ -178,5 +178,4 @@ if YEAR == '2019-20':
     print(bref_advanced_player_stats)
 # endregion
 
-plt.figure(3)
 plt.show()
