@@ -95,5 +95,15 @@ TEAM_ID
 
 
 
+Response to anonymous piazza poster: *I feel like it would also be interesting to see this analysis done on the top 20 NBA players today. Would they deviate far from the regression line relating player speed and distance traveled?*
+
+Here's the graphs by player speed and distance traveled:
+
+![Figure 6](/figures/19-20_f6_Player_VORP_vs_Distance.png)
+![Figure 7](/figures/19-20_f7_Player_VORP_vs_Player_Speed.png)
+
+As expected, graphs have very different representations of movement. A player like Giannis has a relatively low distance traveled, but his average speed tops the league as the best fastbreak finisher in the NBA. Another interesting note is the difference between Harden and Lillard. While both the Rockets and Trailblazers run iso-heavy offenses, Harden is often stagnant, lulling defenders asleep with repetitive still dribbles and Lillard is often using high ball screens to attack the opposing bigs resulting in drastically different average speeds despite each offense prioritizing spacing.
+
+
 [NBA Stats API](https://github.com/swar/nba_api/tree/master/docs/nba_api)
 
